@@ -20,7 +20,7 @@ sed "
 /^export PKG_CONFIG_PATH/s,\$TARGET_SYS,,
 " -i linux-devkit/environment-setup
 
-# Change to your gstreamer version in buildroot
+# Change to your gstreamer plugin version in buildroot
 sed "
 /^GST_MAJORMINOR/s,=.*,=0.10,
 /^GST_REQUIRED/s,=.*,=0.10.0,
@@ -40,18 +40,18 @@ i#undef restrict
 " -i xdctools_3_16_03_36/packages/xdc/std.h
 
 sed "
-/^CPP_FLAGS +=.*std.h$/s,$, -fPIC,
+/^CPP_FLAGS +=.*[^C]$/s,$, -fPIC,
 " -i c6accel_1_01_00_02/soc/c6accelw/Makefile
 
 sed "
 /^libgstticodecplugin_la_LIBADD/s,=.*,=,
 " -i gstreamer-ti_svnr884/src/Makefile.am
 
-#make linux
-#make cmem
-#make codecs
-#make dmai
-#make c6accel
-#make gstreamer_ti
-
+make linux && \
+make cmem && \
+make dsplink && \
+make c6accel && \
+make codecs && \
+make dmai && \
+make gstreamer_ti
 
